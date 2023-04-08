@@ -1,38 +1,49 @@
-# create-svelte
+# Ibentau powered by GPT
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+A quick demo on how to make a knowledge based chatbot using OpenAI embedding and GPT-3 APIs
 
-## Creating a project
+## Prerequisites
 
-If you're seeing this, you've probably already done this step. Congrats!
+Before you begin, ensure you have met the following requirements:
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+* You have an OpenAI API key. To obtain one, sign up at [OpenAI](https://openai.com).
+* You have a Pinecone API key. To obtain one, sign up at [Pinecone](https://www.pinecone.io/start/).
 
-# create a new project in my-app
-npm create svelte@latest my-app
+## Configuration
+
+To configure your environment, create a `.env` file in the root directory of the project with the following content:
+
+```dotenv
+OPENAI_API_KEY=<your_openai_api_key>
+PINECONE_API_KEY=<your_pinecone_api_key>
+PINECONE_ENVIRONMENT=<your_pinecone_environment>
+PINECONE_INDEX=<your_pinecone_index>
 ```
 
-## Developing
+Replace `<your_openai_api_key>`, `<your_pinecone_api_key>`, `<your_pinecone_environment>`, and `<your_pinecone_index>` with the corresponding API keys and values from OpenAI and Pinecone.
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+## Installation
 
-```bash
-npm run dev
+To install the required dependencies, follow these steps:
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
+1. Clone the repository:
+2. Change into the project directory
+3. Install the required packages:
 
 ```bash
-npm run build
+npm install
 ```
 
-You can preview the production build with `npm run preview`.
+## Usage
 
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+To run the Ibentau chatbot, use the following command:
+
+```bash
+npm run generate_embeddings # Generate embeddings for the knowledge base
+npm run build # Build the project
+npm run preview # Start the chatbot
+```
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more information.
