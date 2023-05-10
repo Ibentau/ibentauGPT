@@ -1,3 +1,5 @@
+import 'dotenv/config';
+
 import { readFile } from 'node:fs/promises';
 import puppeteer, { Browser } from 'puppeteer';
 // @ts-ignore
@@ -6,11 +8,38 @@ import { writeFile, mkdir, readdir } from 'fs/promises';
 import { MarkdownTextSplitter } from 'langchain/text_splitter';
 import { OpenAIEmbeddings } from 'langchain/embeddings';
 import { PineconeStore } from 'langchain/vectorstores';
-import { pineconeIndex } from '../src/lib/pinecone';
+import {PineconeClient} from "@pinecone-database/pinecone";
+
+
+const client = new PineconeClient();
+
+let pineconeIndex;
 
 const turndownService = new TurndownService();
 
+// throw error if environment variables are not set
+if (!process.env.PINECONE_API_KEY) {
+    throw new Error('PINECONE_API_KEY is not set');
+}
+if (!process.env.PINECONE_ENVIRONMENT) {
+    throw new Error('PINECONE_ENVIRONMENT is not set');
+}
+if (!process.env.PINECONE_INDEX) {
+    throw new Error('PINECONE_INDEX is not set');
+}
+if (!process.env.PINECONE_API_KEY) {
+    throw new Error('PINECONE_API_KEY is not set');
+}
+
+
 async function main() {
+	await client.init({
+		apiKey: process.env.PINECONE_API_KEY,
+		environment: process.env.PINECONE_ENVIRONMENT,
+	});
+
+	pineconeIndex = client.Index(process.env.PINECONE_INDEX);
+
 	const markdowns = await scrape_all_pages();
 	// const markdowns = await get_all_pages_from_cache();
 	await generate_embeddings(markdowns.join('\n\n'));
